@@ -17,6 +17,10 @@ module.exports = {
         loader: "json"
       },
       {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'url-loader?limit=819200'
+      },
+      {
         test: /\.js$/,
         loader: 'babel',
         exclude: /node_modules/
@@ -24,6 +28,14 @@ module.exports = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style', 'css?modules!postcss')
+      },
+      {
+        test: /\.scss$/,
+        loader: "style!css!sass?sourceMap"
+      },
+      {
+        test: /\.(woff|svg|eot|ttf)\??.*$/,
+        loader: 'url-loader?limit=50000&name=[path][name].[ext]'
       }
     ]
   },
@@ -37,6 +49,11 @@ module.exports = {
     new HtmlWebpackPlugin({template: `${__dirname}/app/index.tmpl.html`}),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin(),
-    new ExtractTextPlugin('[name]-[hash].css')
+    new ExtractTextPlugin('[name]-[hash].css'),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+    })
   ]
 }

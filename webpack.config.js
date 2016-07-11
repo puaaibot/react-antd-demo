@@ -18,13 +18,25 @@ module.exports = {
         loader: "json"
       },
       {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'url-loader?limit=819200'
+      },
+      {
         test: /\.js$/,
         loader: 'babel',
-        exclude: /node_modules/
+        exclude: /node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//
       },
       {
         test: /\.css$/,
-        loader: 'style!css?modules!postcss'
+        loader: 'style-loader!css-loader?sourceMap'
+      },
+      {
+        test: /\.scss$/,
+        loader: "style!css!sass?sourceMap"
+      },
+      {
+        test: /\.(woff|svg|eot|ttf)\??.*$/,
+        loader: 'url-loader?limit=50000&name=[path][name].[ext]'
       }
     ]
   },
@@ -35,7 +47,12 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({template: `${__dirname}/app/index.tmpl.html`}),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+    })
   ],
 
   devServer: {

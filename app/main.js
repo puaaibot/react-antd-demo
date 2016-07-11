@@ -94,7 +94,7 @@ class Navigation extends Component {
 render((
   <Router history={ hashHistory }>
     <Route path="/" component={Navigation}>
-      <IndexRoute path="myCard" component={myCard} />
+      <IndexRoute component={myCard} />
       <Route path="myTable" component={myTable} />
       <Route path="myForm" component={myForm} />
       <Route path="myChart" component={myChart} />
